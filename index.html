@@ -1,0 +1,713 @@
+import React from 'react';
+
+const html = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Report Siswa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #292118;
+      --blue: #c2410c;
+      --light-blue: #fff7ed;
+      --accent: #0d9488;
+      --text: #1c1814;
+      --muted: #78716c;
+      --border: #e7e0d8;
+      --bg: #faf6f1;
+      --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── PAGES ── */
+    .page { display: none; }
+    .page.active { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy);
+      color: white;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .topbar-brand { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; display: flex; align-items: center; gap: 10px; }
+    .topbar-brand .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+    .topbar-nav { display: flex; gap: 2px; }
+    .topbar-nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .topbar-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
+    .hamburger { display: none; background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      background: var(--navy);
+      flex-direction: column;
+      padding: 12px 20px;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .mobile-menu a:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a4080 60%, #1a56db 100%);
+      color: white;
+      padding: 60px 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 14px;
+    }
+    .hero-title { font-size: 2.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 12px; }
+    .hero-title span { color: var(--accent); }
+    .hero-sub { font-size: 0.92rem; opacity: 0.7; line-height: 1.6; }
+    .hero-avatar img {
+      width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.25);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.08);
+    }
+    .hero-avatar { text-align: center; }
+    .hero-avatar p { margin-top: 10px; font-size: 0.82rem; opacity: 0.6; }
+
+    /* ── LAYOUT ── */
+    .layout { display: grid; grid-template-columns: 240px 1fr; gap: 0; flex: 1; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 28px 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+    }
+    .sidebar-section { padding: 0 20px; margin-bottom: 28px; }
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 12px;
+      margin-bottom: 6px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+      margin-bottom: 2px;
+    }
+    .sidebar-link:hover, .sidebar-link.active { background: var(--light-blue); color: var(--blue); }
+    .sidebar-link .icon { font-size: 1rem; width: 20px; text-align: center; }
+    .sidebar-divider { border: none; border-top: 1px solid var(--border); margin: 0 20px 20px; }
+    .sidebar-info { padding: 14px 20px; }
+    .sidebar-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── MAIN ── */
+    .main { padding: 32px 36px; min-width: 0; }
+
+    /* ── SECTION HEADING ── */
+    .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .sec-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--light-blue); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .sec-head h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .sec-head p { font-size: 0.8rem; color: var(--muted); margin-top: 1px; }
+    .sec-line { border: none; border-top: 2px solid var(--border); margin-bottom: 22px; }
+
+    /* ── CARDS ── */
+    .card { background: var(--white); border-radius: 14px; padding: 26px; margin-bottom: 24px; border: 1px solid var(--border); }
+    .card-accent { border-left: 4px solid var(--blue); }
+
+    /* ── BIODATA ── */
+    .bio-grid { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; }
+    .bio-name { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
+    .bio-sub { font-size: 0.82rem; color: var(--muted); margin: 4px 0 16px; }
+    .bio-tag { display: inline-flex; align-items: center; background: var(--light-blue); color: var(--blue); padding: 3px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: 600; margin: 0 4px 6px 0; }
+    .bio-table { width: 100%; font-size: 0.88rem; margin-top: 8px; }
+    .bio-table tr td:first-child { color: var(--muted); font-weight: 500; width: 110px; padding: 5px 0; }
+    .bio-table tr td:last-child { color: var(--text); font-weight: 600; }
+
+    /* ── STATS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+    .stat-card { background: var(--navy); color: white; border-radius: 12px; padding: 18px 20px; text-align: center; }
+    .stat-card .val { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; }
+    .stat-card .lbl { font-size: 0.72rem; opacity: 0.6; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead { background: var(--navy); color: white; }
+    th { padding: 13px 18px; text-align: left; font-weight: 600; font-size: 0.82rem; letter-spacing: 0.03em; }
+    td { padding: 12px 18px; border-bottom: 1px solid var(--border); }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #fafbff; }
+    .badge-green { background: #dcfce7; color: #166534; padding: 3px 10px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    .badge-yellow { background: #fef9c3; color: #854d0e; padding: 3px 10px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+    .avg-row td { background: #eff6ff; font-weight: 700; color: #1e40af; }
+
+    /* ── PROJECT CARDS ── */
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    .proj-card { background: var(--white); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+    .proj-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .proj-top { background: linear-gradient(135deg, var(--navy), #1a56db); padding: 20px; color: white; }
+    .proj-num { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.55; margin-bottom: 6px; }
+    .proj-top h3 { font-size: 0.98rem; font-weight: 700; }
+    .proj-body { padding: 18px; }
+    .proj-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue); color: white;
+      padding: 9px 20px; border-radius: 8px; border: none;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: background 0.2s, transform 0.15s;
+    }
+    .btn:hover { background: #1344b4; transform: translateY(-1px); }
+    .btn-gray { background: #475569; }
+    .btn-gray:hover { background: #334155; }
+
+    /* ── PROJECT DETAIL PAGE ── */
+    .detail-hero {
+      background: linear-gradient(135deg, var(--navy), #1a56db);
+      color: white;
+      padding: 50px 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .detail-hero .num-badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 0.75rem; letter-spacing: 0.06em;
+      margin-bottom: 12px; display: inline-block;
+    }
+    .detail-hero h1 { font-size: 1.9rem; font-weight: 800; }
+    .detail-content { max-width: 740px; margin: 36px auto; padding: 0 28px; }
+    .tech-badge { display: inline-block; background: var(--light-blue); color: var(--blue); border: 1px solid #bfdbfe; padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin: 4px; }
+    .info-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 24px; }
+    .info-box strong { font-size: 0.82rem; font-weight: 700; color: #334155; display: block; margin-bottom: 10px; }
+
+    /* ── CALCULATOR ── */
+    .calc-wrap { display: flex; justify-content: center; margin: 20px 0; }
+    .calc { width: 268px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
+    .calc-display { background: #0d2b4e; padding: 20px 20px 16px; text-align: right; }
+    .calc-sub { color: rgba(255,255,255,0.4); font-size: 0.82rem; min-height: 20px; }
+    .calc-main { color: white; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
+    .calc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: #0d2b4e; padding: 2px; }
+    .c-btn { padding: 17px; font-size: 1rem; border: none; cursor: pointer; font-weight: 600; font-family: inherit; background: #f8fafc; transition: background 0.15s; }
+    .c-btn:hover { background: #e2e8f0; }
+    .c-btn.op { background: #1a56db; color: white; }
+    .c-btn.op:hover { background: #1344b4; }
+    .c-btn.eq { background: var(--accent); color: white; }
+    .c-btn.eq:hover { background: #d97706; }
+    .c-clear { width: 100%; padding: 13px; background: #dc2626; color: white; border: none; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+    .c-clear:hover { background: #b91c1c; }
+
+    /* ── TODO ── */
+    .todo-box { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .todo-input-row { background: var(--navy); padding: 14px 16px; display: flex; gap: 8px; }
+    .todo-input-row input { flex: 1; padding: 10px 14px; border-radius: 8px; border: none; font-size: 0.9rem; font-family: inherit; outline: none; }
+    .todo-input-row button { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 700; font-family: inherit; font-size: 0.85rem; transition: background 0.15s; }
+    .todo-input-row button:hover { background: #d97706; }
+    .todo-list { padding: 10px; background: #fafbfd; min-height: 80px; }
+    .todo-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 6px; background: white; transition: background 0.15s; }
+    .todo-item.done { background: #f0fdf4; border-color: #bbf7d0; }
+    .todo-item.done span { text-decoration: line-through; color: #94a3b8; }
+    .todo-item span { flex: 1; font-size: 0.9rem; }
+    .todo-item input[type=checkbox] { width: 17px; height: 17px; cursor: pointer; accent-color: #16a34a; }
+    .del-btn { background: none; border: none; color: #cbd5e1; cursor: pointer; font-size: 1rem; padding: 3px 6px; border-radius: 5px; transition: all 0.15s; }
+    .del-btn:hover { color: #dc2626; background: #fff1f2; }
+    .todo-footer { padding: 11px 16px; background: var(--bg); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; font-size: 0.8rem; color: var(--muted); }
+    .progress { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 100%; background: #16a34a; border-radius: 3px; transition: width 0.35s; }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--navy); color: rgba(255,255,255,0.6); text-align: center; padding: 22px; font-size: 0.82rem; margin-top: auto; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .topbar-nav { display: none; }
+      .hamburger { display: block; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { padding: 20px 18px; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 40px 24px; }
+      .hero-avatar { display: none; }
+      .hero-title { font-size: 1.9rem; }
+      .bio-grid { grid-template-columns: 1fr; text-align: center; }
+      .stats-row { grid-template-columns: repeat(3,1fr); }
+      .detail-hero { padding: 36px 24px; }
+      .detail-content { padding: 0 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =============================== HOME PAGE =============================== -->
+<div id="page-home" class="page active">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
+    <nav class="topbar-nav">
+      <a onclick="goTo('biodata')">👤 Biodata</a>
+      <a onclick="goTo('tentang')">✏️ Tentang</a>
+      <a onclick="goTo('nilai')">📊 Nilai</a>
+      <a onclick="goTo('project')">🖥️ Project</a>
+    </nav>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a onclick="goTo('biodata');toggleMenu()">👤 Biodata</a>
+    <a onclick="goTo('tentang');toggleMenu()">✏️ Tentang Saya</a>
+    <a onclick="goTo('nilai');toggleMenu()">📊 Nilai</a>
+    <a onclick="goTo('project');toggleMenu()">🖥️ Project</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-label">Mata Pelajaran TIK — Kolese Kanisius Jakarta</div>
+      <div class="hero-title">Website Report<br><span>Siswa Kelas XI</span></div>
+      <div class="hero-sub">Semester Genap 2026 · Dokumentasi hasil belajar dan karya project selama satu semester.</div>
+    </div>
+    <div class="hero-avatar">
+      <img src="https://i.imgur.com/2DhmtJ4.png" alt="Foto Profil" />
+      <p>Nama Kamu</p>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Menu Utama</div>
+        <a class="sidebar-link" onclick="goTo('biodata')"><span class="icon">👤</span> Biodata</a>
+        <a class="sidebar-link" onclick="goTo('tentang')"><span class="icon">✏️</span> Tentang Saya</a>
+        <a class="sidebar-link" onclick="goTo('nilai')"><span class="icon">📊</span> Nilai</a>
+        <a class="sidebar-link" onclick="goTo('project')"><span class="icon">🖥️</span> Project</a>
+      </div>
+      <hr class="sidebar-divider" />
+      <div class="sidebar-section">
+        <div class="sidebar-label">Project</div>
+        <a class="sidebar-link" onclick="showPage('project1')"><span class="icon">01</span> Biodata Siswa</a>
+        <a class="sidebar-link" onclick="showPage('project2')"><span class="icon">02</span> Kalkulator</a>
+        <a class="sidebar-link" onclick="showPage('project3')"><span class="icon">03</span> To Do List</a>
+      </div>
+      <hr class="sidebar-divider" />
+      <div class="sidebar-info">
+        <p>Kolese Kanisius Jakarta<br />Mata Pelajaran TIK<br />Semester Genap 2026</p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- BIODATA -->
+      <div class="card card-accent" id="biodata">
+        <div class="sec-head">
+          <div class="sec-icon">📋</div>
+          <div><h2>Biodata Siswa</h2><p>Informasi data diri</p></div>
+        </div>
+        <hr class="sec-line" />
+        <div class="bio-grid">
+          <img src="https://i.imgur.com/2DhmtJ4.png" alt="Foto" style="width:100px;height:100px;border-radius:12px;object-fit:cover;border:3px solid var(--border);" />
+          <div>
+            <div class="bio-name">Nama Kamu</div>
+            <div class="bio-sub">Siswa Kelas XI · Kolese Kanisius Jakarta</div>
+            <div>
+              <span class="bio-tag">🎓 Kelas XI</span>
+              <span class="bio-tag">💻 Web Dev</span>
+              <span class="bio-tag">⭐ Aktif 2026</span>
+            </div>
+            <table class="bio-table">
+              <tr><td>Kelas</td><td>XI</td></tr>
+              <tr><td>Sekolah</td><td>Kolese Kanisius Jakarta</td></tr>
+              <tr><td>Hobi</td><td>Coding &amp; Design</td></tr>
+              <tr><td>Cita-cita</td><td>Software Engineer</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TENTANG SAYA -->
+      <div class="card card-accent" id="tentang">
+        <div class="sec-head">
+          <div class="sec-icon">👤</div>
+          <div><h2>Tentang Saya</h2><p>Latar belakang dan motivasi</p></div>
+        </div>
+        <hr class="sec-line" />
+        <p style="line-height:1.85;font-size:0.93rem;color:#475569;">
+          Saya adalah siswa kelas XI dari Kolese Kanisius yang memiliki minat besar dalam bidang
+          teknologi dan pemrograman web. Sejak awal semester ini, saya mulai mendalami HTML, CSS,
+          dan JavaScript untuk membuat berbagai project website interaktif. Tujuan saya mempelajari
+          pemrograman web adalah untuk menjadi seorang Software Engineer yang mampu menciptakan
+          solusi digital yang bermanfaat bagi masyarakat luas.
+        </p>
+      </div>
+
+      <!-- NILAI -->
+      <div class="card card-accent" id="nilai">
+        <div class="sec-head">
+          <div class="sec-icon">📊</div>
+          <div><h2>Nilai Ulangan Semester</h2><p>Rekap nilai selama satu semester</p></div>
+        </div>
+        <hr class="sec-line" />
+        <div class="stats-row" id="stats-row"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>No</th><th>Nama Materi</th><th>Nilai</th></tr></thead>
+            <tbody id="grade-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PROJECT -->
+      <div id="project" style="margin-bottom:10px;">
+        <div class="sec-head" style="margin-bottom:18px;">
+          <div class="sec-icon">🖥️</div>
+          <div><h2>Project Semester Ini</h2><p>Karya yang dibuat selama satu semester</p></div>
+        </div>
+        <div class="project-grid">
+          <div class="proj-card">
+            <div class="proj-top"><div class="proj-num">Project 01</div><h3>Website Biodata Siswa</h3></div>
+            <div class="proj-body">
+              <p>Website profil pribadi menggunakan HTML dan CSS murni. Menampilkan data diri, foto, dan informasi kontak.</p>
+              <button class="btn" onclick="showPage('project1')">Lihat Project →</button>
+            </div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-top"><div class="proj-num">Project 02</div><h3>Kalkulator JavaScript</h3></div>
+            <div class="proj-body">
+              <p>Aplikasi kalkulator interaktif dengan operasi penjumlahan, pengurangan, perkalian, dan pembagian.</p>
+              <button class="btn" onclick="showPage('project2')">Lihat Project →</button>
+            </div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-top"><div class="proj-num">Project 03</div><h3>To Do List App</h3></div>
+            <div class="proj-body">
+              <p>Aplikasi manajemen tugas sederhana dengan fitur tambah, hapus, dan centang tugas menggunakan JavaScript.</p>
+              <button class="btn" onclick="showPage('project3')">Lihat Project →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Mata Pelajaran TIK</div>
+</div>
+
+<!-- =============================== PROJECT 1 =============================== -->
+<div id="page-project1" class="page">
+  <div class="topbar">
+    <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
+    <button class="btn btn-gray" onclick="showPage('home')" style="font-size:0.8rem;padding:7px 14px;">← Kembali</button>
+  </div>
+  <div class="detail-hero">
+    <div>
+      <span class="num-badge">Project 1 dari 3</span>
+      <h1>Website Biodata Siswa</h1>
+    </div>
+  </div>
+  <div class="detail-content">
+    <div class="card" style="margin-top:0;">
+      <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
+      <hr class="sec-line" />
+      <p style="line-height:1.85;color:#475569;margin-bottom:14px;font-size:0.93rem;">
+        Project ini adalah website profil pribadi yang dibuat menggunakan HTML dan CSS murni.
+        Website menampilkan data diri lengkap seperti nama, kelas, sekolah, hobi, dan cita-cita,
+        dilengkapi dengan foto profil dan tampilan yang rapi menggunakan CSS styling.
+      </p>
+      <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
+        Tujuan dari project ini adalah untuk mempraktikkan kemampuan dasar pembuatan struktur
+        halaman HTML dan mengaplikasikan desain menggunakan CSS agar tampilan terlihat menarik.
+      </p>
+      <div class="info-box">
+        <strong>Teknologi yang digunakan:</strong>
+        <div><span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span></div>
+      </div>
+      <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
+    </div>
+  </div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+</div>
+
+<!-- =============================== PROJECT 2 =============================== -->
+<div id="page-project2" class="page">
+  <div class="topbar">
+    <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
+    <button class="btn btn-gray" onclick="showPage('home')" style="font-size:0.8rem;padding:7px 14px;">← Kembali</button>
+  </div>
+  <div class="detail-hero">
+    <div>
+      <span class="num-badge">Project 2 dari 3</span>
+      <h1>Kalkulator JavaScript</h1>
+    </div>
+  </div>
+  <div class="detail-content">
+    <div class="card" style="margin-top:0;">
+      <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
+      <hr class="sec-line" />
+      <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
+        Aplikasi kalkulator interaktif berbasis web yang mendukung operasi aritmatika dasar:
+        penjumlahan, pengurangan, perkalian, dan pembagian. Dibuat menggunakan JavaScript murni
+        untuk logika kalkulasi dan CSS untuk tampilan yang rapi.
+      </p>
+      <div class="calc-wrap">
+        <div class="calc">
+          <div class="calc-display">
+            <div class="calc-sub" id="calc-sub"></div>
+            <div class="calc-main" id="calc-main">0</div>
+          </div>
+          <div class="calc-grid">
+            <button class="c-btn" onclick="calcPress('7')">7</button>
+            <button class="c-btn" onclick="calcPress('8')">8</button>
+            <button class="c-btn" onclick="calcPress('9')">9</button>
+            <button class="c-btn op" onclick="setOp('÷')">÷</button>
+            <button class="c-btn" onclick="calcPress('4')">4</button>
+            <button class="c-btn" onclick="calcPress('5')">5</button>
+            <button class="c-btn" onclick="calcPress('6')">6</button>
+            <button class="c-btn op" onclick="setOp('×')">×</button>
+            <button class="c-btn" onclick="calcPress('1')">1</button>
+            <button class="c-btn" onclick="calcPress('2')">2</button>
+            <button class="c-btn" onclick="calcPress('3')">3</button>
+            <button class="c-btn op" onclick="setOp('−')">−</button>
+            <button class="c-btn" onclick="calcPress('0')">0</button>
+            <button class="c-btn" onclick="calcPress('.')">.</button>
+            <button class="c-btn eq" onclick="calcEqual()">=</button>
+            <button class="c-btn op" onclick="setOp('+')">+</button>
+          </div>
+          <button class="c-clear" onclick="calcClear()">C — Hapus</button>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+</div>
+
+<!-- =============================== PROJECT 3 =============================== -->
+<div id="page-project3" class="page">
+  <div class="topbar">
+    <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
+    <button class="btn btn-gray" onclick="showPage('home')" style="font-size:0.8rem;padding:7px 14px;">← Kembali</button>
+  </div>
+  <div class="detail-hero">
+    <div>
+      <span class="num-badge">Project 3 dari 3</span>
+      <h1>To Do List App</h1>
+    </div>
+  </div>
+  <div class="detail-content">
+    <div class="card" style="margin-top:0;">
+      <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
+      <hr class="sec-line" />
+      <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
+        Aplikasi To Do List interaktif yang memungkinkan pengguna menambah, menandai selesai,
+        dan menghapus tugas. Dibuat menggunakan JavaScript dengan manipulasi DOM secara langsung,
+        tanpa library tambahan.
+      </p>
+      <div class="todo-box">
+        <div class="todo-input-row">
+          <input type="text" id="todo-input" placeholder="Tambah tugas baru..." onkeydown="if(event.key==='Enter') addTodo()" />
+          <button onclick="addTodo()">+ Tambah</button>
+        </div>
+        <div class="todo-list" id="todo-list"></div>
+        <div class="todo-footer">
+          <span id="todo-count">0 dari 0 tugas selesai</span>
+          <div class="progress"><div class="progress-bar" id="todo-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+</div>
+
+<script>
+  // ── NAVIGATION ──
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function goTo(id) {
+    showPage('home');
+    setTimeout(function() {
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }
+
+  function toggleMenu() {
+    var m = document.getElementById('mobile-menu');
+    m.classList.toggle('open');
+  }
+
+  // ── GRADES ──
+  var grades = [
+    { no: 1, materi: 'Tugas 1 — HTML Dasar', nilai: 92 },
+    { no: 2, materi: 'Tugas 2 — CSS Styling', nilai: 90 },
+    { no: 3, materi: 'Tugas 3 — JavaScript', nilai: 88 },
+    { no: 4, materi: 'Tugas 4 — Responsive Design', nilai: 95 },
+    { no: 5, materi: 'Mini Project Website', nilai: 97 },
+  ];
+  (function renderGrades() {
+    var tbody = document.getElementById('grade-tbody');
+    var total = 0, highest = 0;
+    grades.forEach(function(g) {
+      total += g.nilai;
+      if (g.nilai > highest) highest = g.nilai;
+      var cls = g.nilai >= 90 ? 'badge-green' : 'badge-yellow';
+      tbody.innerHTML += '<tr><td>' + g.no + '</td><td>' + g.materi + '</td><td><span class="' + cls + '">' + g.nilai + '</span></td></tr>';
+    });
+    var avg = (total / grades.length).toFixed(1);
+    tbody.innerHTML += '<tr class="avg-row"><td colspan="2">📈 Rata-rata</td><td><span class="badge-green">' + avg + '</span></td></tr>';
+    var stats = document.getElementById('stats-row');
+    [{ val: avg, lbl: 'Rata-rata' }, { val: highest, lbl: 'Tertinggi' }, { val: grades.length, lbl: 'Total Tugas' }].forEach(function(s) {
+      stats.innerHTML += '<div class="stat-card"><div class="val">' + s.val + '</div><div class="lbl">' + s.lbl + '</div></div>';
+    });
+    console.log('Rata-rata nilai: ' + avg);
+  })();
+
+  // ── CALCULATOR ──
+  var cDisplay = '0', cPrev = '', cOp = '';
+  function calcPress(v) {
+    cDisplay = (cDisplay === '0') ? v : cDisplay + v;
+    document.getElementById('calc-main').textContent = cDisplay;
+  }
+  function setOp(op) {
+    cPrev = cDisplay; cOp = op; cDisplay = '0';
+    document.getElementById('calc-sub').textContent = cPrev + ' ' + op;
+    document.getElementById('calc-main').textContent = cDisplay;
+  }
+  function calcEqual() {
+    var a = parseFloat(cPrev), b = parseFloat(cDisplay), res;
+    if (cOp === '+') res = a + b;
+    else if (cOp === '−') res = a - b;
+    else if (cOp === '×') res = a * b;
+    else if (cOp === '÷') res = b !== 0 ? a / b : 'Error';
+    cDisplay = String(parseFloat(res.toFixed(8)));
+    cPrev = ''; cOp = '';
+    document.getElementById('calc-sub').textContent = '';
+    document.getElementById('calc-main').textContent = cDisplay;
+  }
+  function calcClear() {
+    cDisplay = '0'; cPrev = ''; cOp = '';
+    document.getElementById('calc-sub').textContent = '';
+    document.getElementById('calc-main').textContent = '0';
+  }
+
+  // ── TO DO ──
+  var todos = [
+    { id: 1, text: 'Belajar HTML', done: true },
+    { id: 2, text: 'Belajar CSS', done: true },
+    { id: 3, text: 'Belajar JavaScript', done: false },
+  ];
+  function renderTodos() {
+    var list = document.getElementById('todo-list');
+    list.innerHTML = '';
+    if (!todos.length) {
+      list.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:24px;font-size:0.9rem;">Belum ada tugas.</p>';
+    } else {
+      todos.forEach(function(t) {
+        var d = document.createElement('div');
+        d.className = 'todo-item' + (t.done ? ' done' : '');
+        d.innerHTML = '<input type="checkbox"' + (t.done ? ' checked' : '') + ' onchange="toggleTodo(' + t.id + ')" />' +
+          '<span>' + t.text + '</span>' +
+          '<button class="del-btn" onclick="removeTodo(' + t.id + ')">✕</button>';
+        list.appendChild(d);
+      });
+    }
+    var done = todos.filter(function(t) { return t.done; }).length;
+    var pct = todos.length ? Math.round(done / todos.length * 100) : 0;
+    document.getElementById('todo-count').textContent = done + ' dari ' + todos.length + ' tugas selesai';
+    document.getElementById('todo-bar').style.width = pct + '%';
+  }
+  function addTodo() {
+    var input = document.getElementById('todo-input');
+    var text = input.value.trim();
+    if (!text) return;
+    todos.push({ id: Date.now(), text: text, done: false });
+    input.value = '';
+    renderTodos();
+  }
+  function toggleTodo(id) {
+    todos = todos.map(function(t) { return t.id === id ? { id: t.id, text: t.text, done: !t.done } : t; });
+    renderTodos();
+  }
+  function removeTodo(id) {
+    todos = todos.filter(function(t) { return t.id !== id; });
+    renderTodos();
+  }
+  renderTodos();
+  console.log('Website Report Siswa berhasil dimuat!');
+</script>
+</body>
+</html>`;
+
+export default function Home() {
+  return (
+    <iframe
+      srcDoc={html}
+      style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }}
+      title="Website Report Siswa"
+    />
+  );
+}
