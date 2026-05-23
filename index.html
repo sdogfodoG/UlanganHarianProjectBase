@@ -1,6 +1,3 @@
-import React from 'react';
-
-const html = `<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -27,7 +24,6 @@ const html = `<!DOCTYPE html>
     .page { display: none; }
     .page.active { display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* ── TOP BAR ── */
     .topbar {
       background: var(--navy);
       color: white;
@@ -57,7 +53,6 @@ const html = `<!DOCTYPE html>
     .topbar-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
     .hamburger { display: none; background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; }
 
-    /* ── MOBILE MENU ── */
     .mobile-menu {
       display: none;
       background: var(--navy);
@@ -78,7 +73,6 @@ const html = `<!DOCTYPE html>
     }
     .mobile-menu a:hover { background: rgba(255,255,255,0.1); color: white; }
 
-    /* ── HERO ── */
     .hero {
       background: linear-gradient(135deg, var(--navy) 0%, #1a4080 60%, #1a56db 100%);
       color: white;
@@ -106,10 +100,8 @@ const html = `<!DOCTYPE html>
     .hero-avatar { text-align: center; }
     .hero-avatar p { margin-top: 10px; font-size: 0.82rem; opacity: 0.6; }
 
-    /* ── LAYOUT ── */
     .layout { display: grid; grid-template-columns: 240px 1fr; gap: 0; flex: 1; }
 
-    /* ── SIDEBAR ── */
     .sidebar {
       background: var(--white);
       border-right: 1px solid var(--border);
@@ -149,21 +141,17 @@ const html = `<!DOCTYPE html>
     .sidebar-info { padding: 14px 20px; }
     .sidebar-info p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
 
-    /* ── MAIN ── */
     .main { padding: 32px 36px; min-width: 0; }
 
-    /* ── SECTION HEADING ── */
     .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
     .sec-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--light-blue); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .sec-head h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
     .sec-head p { font-size: 0.8rem; color: var(--muted); margin-top: 1px; }
     .sec-line { border: none; border-top: 2px solid var(--border); margin-bottom: 22px; }
 
-    /* ── CARDS ── */
     .card { background: var(--white); border-radius: 14px; padding: 26px; margin-bottom: 24px; border: 1px solid var(--border); }
     .card-accent { border-left: 4px solid var(--blue); }
 
-    /* ── BIODATA ── */
     .bio-grid { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; }
     .bio-name { font-size: 1.35rem; font-weight: 700; color: var(--navy); }
     .bio-sub { font-size: 0.82rem; color: var(--muted); margin: 4px 0 16px; }
@@ -172,13 +160,11 @@ const html = `<!DOCTYPE html>
     .bio-table tr td:first-child { color: var(--muted); font-weight: 500; width: 110px; padding: 5px 0; }
     .bio-table tr td:last-child { color: var(--text); font-weight: 600; }
 
-    /* ── STATS ── */
     .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
     .stat-card { background: var(--navy); color: white; border-radius: 12px; padding: 18px 20px; text-align: center; }
     .stat-card .val { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; }
     .stat-card .lbl { font-size: 0.72rem; opacity: 0.6; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* ── TABLE ── */
     .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     thead { background: var(--navy); color: white; }
@@ -190,7 +176,6 @@ const html = `<!DOCTYPE html>
     .badge-yellow { background: #fef9c3; color: #854d0e; padding: 3px 10px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
     .avg-row td { background: #eff6ff; font-weight: 700; color: #1e40af; }
 
-    /* ── PROJECT CARDS ── */
     .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
     .proj-card { background: var(--white); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
     .proj-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
@@ -200,7 +185,6 @@ const html = `<!DOCTYPE html>
     .proj-body { padding: 18px; }
     .proj-body p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
 
-    /* ── BUTTONS ── */
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--blue); color: white;
@@ -212,7 +196,6 @@ const html = `<!DOCTYPE html>
     .btn-gray { background: #475569; }
     .btn-gray:hover { background: #334155; }
 
-    /* ── PROJECT DETAIL PAGE ── */
     .detail-hero {
       background: linear-gradient(135deg, var(--navy), #1a56db);
       color: white;
@@ -234,7 +217,6 @@ const html = `<!DOCTYPE html>
     .info-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 24px; }
     .info-box strong { font-size: 0.82rem; font-weight: 700; color: #334155; display: block; margin-bottom: 10px; }
 
-    /* ── CALCULATOR ── */
     .calc-wrap { display: flex; justify-content: center; margin: 20px 0; }
     .calc { width: 268px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15); }
     .calc-display { background: #0d2b4e; padding: 20px 20px 16px; text-align: right; }
@@ -250,7 +232,6 @@ const html = `<!DOCTYPE html>
     .c-clear { width: 100%; padding: 13px; background: #dc2626; color: white; border: none; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
     .c-clear:hover { background: #b91c1c; }
 
-    /* ── TODO ── */
     .todo-box { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .todo-input-row { background: var(--navy); padding: 14px 16px; display: flex; gap: 8px; }
     .todo-input-row input { flex: 1; padding: 10px 14px; border-radius: 8px; border: none; font-size: 0.9rem; font-family: inherit; outline: none; }
@@ -268,10 +249,8 @@ const html = `<!DOCTYPE html>
     .progress { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
     .progress-bar { height: 100%; background: #16a34a; border-radius: 3px; transition: width 0.35s; }
 
-    /* ── FOOTER ── */
     .footer { background: var(--navy); color: rgba(255,255,255,0.6); text-align: center; padding: 22px; font-size: 0.82rem; margin-top: auto; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .topbar-nav { display: none; }
       .hamburger { display: block; }
@@ -290,10 +269,8 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 
-<!-- =============================== HOME PAGE =============================== -->
 <div id="page-home" class="page active">
 
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
     <nav class="topbar-nav">
@@ -311,7 +288,6 @@ const html = `<!DOCTYPE html>
     <a onclick="goTo('project');toggleMenu()">🖥️ Project</a>
   </div>
 
-  <!-- HERO -->
   <div class="hero">
     <div>
       <div class="hero-label">Mata Pelajaran TIK — Kolese Kanisius Jakarta</div>
@@ -319,15 +295,13 @@ const html = `<!DOCTYPE html>
       <div class="hero-sub">Semester Genap 2026 · Dokumentasi hasil belajar dan karya project selama satu semester.</div>
     </div>
     <div class="hero-avatar">
-      <img src="https://i.imgur.com/2DhmtJ4.png" alt="Foto Profil" />
-      <p>Nama Kamu</p>
+      <img src="PrimeDwayneJohnson.jpeg" alt="Foto Profil" />
+      <p>Airell David Wibowo</p>
     </div>
   </div>
 
-  <!-- LAYOUT -->
   <div class="layout">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-section">
         <div class="sidebar-label">Menu Utama</div>
@@ -345,61 +319,50 @@ const html = `<!DOCTYPE html>
       </div>
       <hr class="sidebar-divider" />
       <div class="sidebar-info">
-        <p>Kolese Kanisius Jakarta<br />Mata Pelajaran TIK<br />Semester Genap 2026</p>
+        <p>Dibuat Oleh Airell D.W.<br />XIA4 / 01 / 2415545<br />Kolese Kanisius Jakarta <br> Tahun Ajaran 2025/2026</p>
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main">
 
-      <!-- BIODATA -->
       <div class="card card-accent" id="biodata">
         <div class="sec-head">
           <div class="sec-icon">📋</div>
-          <div><h2>Biodata Siswa</h2><p>Informasi data diri</p></div>
+          <div><h2>Biodata Siswa</h2></div>
         </div>
         <hr class="sec-line" />
         <div class="bio-grid">
-          <img src="https://i.imgur.com/2DhmtJ4.png" alt="Foto" style="width:100px;height:100px;border-radius:12px;object-fit:cover;border:3px solid var(--border);" />
+          <img src="FallenOffDwayneJohnson.jpeg" alt="Foto" style="width:100px;height:100px;border-radius:12px;object-fit:cover;border:3px solid var(--border);" />
           <div>
             <div class="bio-name">Nama Kamu</div>
             <div class="bio-sub">Siswa Kelas XI · Kolese Kanisius Jakarta</div>
-            <div>
-              <span class="bio-tag">🎓 Kelas XI</span>
-              <span class="bio-tag">💻 Web Dev</span>
-              <span class="bio-tag">⭐ Aktif 2026</span>
-            </div>
             <table class="bio-table">
-              <tr><td>Kelas</td><td>XI</td></tr>
+              <tr><td>Kelas</td><td>XIA4</td></tr>
               <tr><td>Sekolah</td><td>Kolese Kanisius Jakarta</td></tr>
-              <tr><td>Hobi</td><td>Coding &amp; Design</td></tr>
-              <tr><td>Cita-cita</td><td>Software Engineer</td></tr>
+              <tr><td>Hobi</td><td>Bola Voli & Bermain Game</td></tr>
+              <tr><td>Cita-cita</td><td>Electrical Engineer</td></tr>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- TENTANG SAYA -->
       <div class="card card-accent" id="tentang">
         <div class="sec-head">
           <div class="sec-icon">👤</div>
-          <div><h2>Tentang Saya</h2><p>Latar belakang dan motivasi</p></div>
+          <div><h2>Tentang Saya</h2></div>
         </div>
         <hr class="sec-line" />
         <p style="line-height:1.85;font-size:0.93rem;color:#475569;">
-          Saya adalah siswa kelas XI dari Kolese Kanisius yang memiliki minat besar dalam bidang
-          teknologi dan pemrograman web. Sejak awal semester ini, saya mulai mendalami HTML, CSS,
-          dan JavaScript untuk membuat berbagai project website interaktif. Tujuan saya mempelajari
-          pemrograman web adalah untuk menjadi seorang Software Engineer yang mampu menciptakan
-          solusi digital yang bermanfaat bagi masyarakat luas.
+          Nama saya Airell David Wibowo dari kelas XIA4 nomor absen 01 di Kolese Kanisius Jakarta. Saya berminat dalam bidang IPA, secara spesifik dalam mata pelajaran Fisika.
+          Saya juga menikmati membuat website seperti ini, terutama ketika melihat hasil website yang sudah bagus. Saya berharap untuk bisa terus mengembangkan kemampuan coding saya
+          sehingga bisa membuat website yang lebih bagus lagi dalam masa depan.
         </p>
       </div>
 
-      <!-- NILAI -->
       <div class="card card-accent" id="nilai">
         <div class="sec-head">
           <div class="sec-icon">📊</div>
-          <div><h2>Nilai Ulangan Semester</h2><p>Rekap nilai selama satu semester</p></div>
+          <div><h2>Nilai Ulangan Semester</h2></div>
         </div>
         <hr class="sec-line" />
         <div class="stats-row" id="stats-row"></div>
@@ -411,31 +374,30 @@ const html = `<!DOCTYPE html>
         </div>
       </div>
 
-      <!-- PROJECT -->
       <div id="project" style="margin-bottom:10px;">
         <div class="sec-head" style="margin-bottom:18px;">
           <div class="sec-icon">🖥️</div>
-          <div><h2>Project Semester Ini</h2><p>Karya yang dibuat selama satu semester</p></div>
+          <div><h2>Riwayat Project-project</h2></div>
         </div>
         <div class="project-grid">
           <div class="proj-card">
-            <div class="proj-top"><div class="proj-num">Project 01</div><h3>Website Biodata Siswa</h3></div>
+            <div class="proj-top"><div class="proj-num">Project 01</div><h3>Proyek Akhir Semester Ganjil</h3></div>
             <div class="proj-body">
-              <p>Website profil pribadi menggunakan HTML dan CSS murni. Menampilkan data diri, foto, dan informasi kontak.</p>
+              <p>Website proyek akhir ini memuat sebuah tema yang setiap kelompok pilih.</p>
               <button class="btn" onclick="showPage('project1')">Lihat Project →</button>
             </div>
           </div>
           <div class="proj-card">
-            <div class="proj-top"><div class="proj-num">Project 02</div><h3>Kalkulator JavaScript</h3></div>
+            <div class="proj-top"><div class="proj-num">Project 02</div><h3>Bootstrap Cards</h3></div>
             <div class="proj-body">
-              <p>Aplikasi kalkulator interaktif dengan operasi penjumlahan, pengurangan, perkalian, dan pembagian.</p>
+              <p>Project ini merupakan project membuat kartu-kartu mengenai suatu tema dengan menggunakan boostrap</p>
               <button class="btn" onclick="showPage('project2')">Lihat Project →</button>
             </div>
           </div>
           <div class="proj-card">
-            <div class="proj-top"><div class="proj-num">Project 03</div><h3>To Do List App</h3></div>
+            <div class="proj-top"><div class="proj-num">Project 03</div><h3>Mini Project Website</h3></div>
             <div class="proj-body">
-              <p>Aplikasi manajemen tugas sederhana dengan fitur tambah, hapus, dan centang tugas menggunakan JavaScript.</p>
+              <p>Mini Project Website ini mengandung konten mengenai sebuah produk yang kami promosikan.</p>
               <button class="btn" onclick="showPage('project3')">Lihat Project →</button>
             </div>
           </div>
@@ -445,10 +407,9 @@ const html = `<!DOCTYPE html>
     </main>
   </div>
 
-  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Mata Pelajaran TIK</div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Tahun Ajaran 2025/2026</div>
 </div>
 
-<!-- =============================== PROJECT 1 =============================== -->
 <div id="page-project1" class="page">
   <div class="topbar">
     <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
@@ -457,7 +418,7 @@ const html = `<!DOCTYPE html>
   <div class="detail-hero">
     <div>
       <span class="num-badge">Project 1 dari 3</span>
-      <h1>Website Biodata Siswa</h1>
+      <h1>Proyek Akhir Semester Ganjil</h1>
     </div>
   </div>
   <div class="detail-content">
@@ -465,13 +426,12 @@ const html = `<!DOCTYPE html>
       <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
       <hr class="sec-line" />
       <p style="line-height:1.85;color:#475569;margin-bottom:14px;font-size:0.93rem;">
-        Project ini adalah website profil pribadi yang dibuat menggunakan HTML dan CSS murni.
-        Website menampilkan data diri lengkap seperti nama, kelas, sekolah, hobi, dan cita-cita,
-        dilengkapi dengan foto profil dan tampilan yang rapi menggunakan CSS styling.
+        Project akhir semester ganjil ini memiliki judul MMAMOTH (Mitchell's Marvelous Museum On The Hill).
+        Website tersebut mengandung informasi dan galeri dari hewan-hewan peliharaan Mitchell. 
       </p>
       <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
-        Tujuan dari project ini adalah untuk mempraktikkan kemampuan dasar pembuatan struktur
-        halaman HTML dan mengaplikasikan desain menggunakan CSS agar tampilan terlihat menarik.
+        Tujuan dari project ini adalah untuk membuat sebuah website untuk menguji kemampuan kita dalam 
+        menggunakan komponen flex dan keterampilan HTML dan CSS dasar.
       </p>
       <div class="info-box">
         <strong>Teknologi yang digunakan:</strong>
@@ -480,10 +440,9 @@ const html = `<!DOCTYPE html>
       <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
     </div>
   </div>
-  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Tahun Ajaran 2025/2026</div>
 </div>
 
-<!-- =============================== PROJECT 2 =============================== -->
 <div id="page-project2" class="page">
   <div class="topbar">
     <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
@@ -492,7 +451,7 @@ const html = `<!DOCTYPE html>
   <div class="detail-hero">
     <div>
       <span class="num-badge">Project 2 dari 3</span>
-      <h1>Kalkulator JavaScript</h1>
+      <h1>Bootstrap Cards</h1>
     </div>
   </div>
   <div class="detail-content">
@@ -500,46 +459,21 @@ const html = `<!DOCTYPE html>
       <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
       <hr class="sec-line" />
       <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
-        Aplikasi kalkulator interaktif berbasis web yang mendukung operasi aritmatika dasar:
-        penjumlahan, pengurangan, perkalian, dan pembagian. Dibuat menggunakan JavaScript murni
-        untuk logika kalkulasi dan CSS untuk tampilan yang rapi.
+        Pada project ini, kami mengaplikasikan pengetahuan boostrap yang sudah kami pelajari sebelumnya.
+        Saya mengambil tema mengenai "tribes" dalam permainan Polytopia yang merupakan game strategi online.
       </p>
-      <div class="calc-wrap">
-        <div class="calc">
-          <div class="calc-display">
-            <div class="calc-sub" id="calc-sub"></div>
-            <div class="calc-main" id="calc-main">0</div>
-          </div>
-          <div class="calc-grid">
-            <button class="c-btn" onclick="calcPress('7')">7</button>
-            <button class="c-btn" onclick="calcPress('8')">8</button>
-            <button class="c-btn" onclick="calcPress('9')">9</button>
-            <button class="c-btn op" onclick="setOp('÷')">÷</button>
-            <button class="c-btn" onclick="calcPress('4')">4</button>
-            <button class="c-btn" onclick="calcPress('5')">5</button>
-            <button class="c-btn" onclick="calcPress('6')">6</button>
-            <button class="c-btn op" onclick="setOp('×')">×</button>
-            <button class="c-btn" onclick="calcPress('1')">1</button>
-            <button class="c-btn" onclick="calcPress('2')">2</button>
-            <button class="c-btn" onclick="calcPress('3')">3</button>
-            <button class="c-btn op" onclick="setOp('−')">−</button>
-            <button class="c-btn" onclick="calcPress('0')">0</button>
-            <button class="c-btn" onclick="calcPress('.')">.</button>
-            <button class="c-btn eq" onclick="calcEqual()">=</button>
-            <button class="c-btn op" onclick="setOp('+')">+</button>
-          </div>
-          <button class="c-clear" onclick="calcClear()">C — Hapus</button>
-        </div>
+      <div class="info-box">
+        <strong>Teknologi yang digunakan:</strong>
+        <div><span class="tech-badge">HTML5</span><span class="tech-badge">Boostrap5</span></div>
       </div>
       <div style="margin-top:28px;">
         <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
       </div>
     </div>
   </div>
-  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Tahun Ajaran 2025/2026</div>
 </div>
 
-<!-- =============================== PROJECT 3 =============================== -->
 <div id="page-project3" class="page">
   <div class="topbar">
     <div class="topbar-brand"><span class="dot"></span> Website Report Siswa</div>
@@ -548,7 +482,7 @@ const html = `<!DOCTYPE html>
   <div class="detail-hero">
     <div>
       <span class="num-badge">Project 3 dari 3</span>
-      <h1>To Do List App</h1>
+      <h1>Mini Project Website</h1>
     </div>
   </div>
   <div class="detail-content">
@@ -556,27 +490,20 @@ const html = `<!DOCTYPE html>
       <div class="sec-head"><div class="sec-icon">📄</div><div><h2>Deskripsi Project</h2></div></div>
       <hr class="sec-line" />
       <p style="line-height:1.85;color:#475569;margin-bottom:24px;font-size:0.93rem;">
-        Aplikasi To Do List interaktif yang memungkinkan pengguna menambah, menandai selesai,
-        dan menghapus tugas. Dibuat menggunakan JavaScript dengan manipulasi DOM secara langsung,
-        tanpa library tambahan.
+        Mini Project ini adalah sebuah project kelompok yang dikerjakan dalam jangka beberapa minggu.
+        Website yang kami buat memuat sebuah produk yang kami promosikan. Kami menggunakan produk mouse bernama
+        GPro Superlight, Razer Deathadder, dan Razer Basilisk. Kami mengaplikasikan kode program HTML, CSS, dan Boostrap yang kami pelajari di kelas.
       </p>
-      <div class="todo-box">
-        <div class="todo-input-row">
-          <input type="text" id="todo-input" placeholder="Tambah tugas baru..." onkeydown="if(event.key==='Enter') addTodo()" />
-          <button onclick="addTodo()">+ Tambah</button>
-        </div>
-        <div class="todo-list" id="todo-list"></div>
-        <div class="todo-footer">
-          <span id="todo-count">0 dari 0 tugas selesai</span>
-          <div class="progress"><div class="progress-bar" id="todo-bar" style="width:0%"></div></div>
-        </div>
+      <div class="info-box">
+        <strong>Teknologi yang digunakan:</strong>
+        <div><span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span><span class="tech-badge">Boostrap5</span></div>
       </div>
       <div style="margin-top:28px;">
         <button class="btn btn-gray" onclick="showPage('home')">← Kembali ke Halaman Utama</button>
       </div>
     </div>
   </div>
-  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta</div>
+  <div class="footer">© 2026 Website Report Siswa · Kolese Kanisius Jakarta · Tahun Ajaran 2025/2026</div>
 </div>
 
 <script>
@@ -602,10 +529,10 @@ const html = `<!DOCTYPE html>
 
   // ── GRADES ──
   var grades = [
-    { no: 1, materi: 'Tugas 1 — HTML Dasar', nilai: 92 },
-    { no: 2, materi: 'Tugas 2 — CSS Styling', nilai: 90 },
-    { no: 3, materi: 'Tugas 3 — JavaScript', nilai: 88 },
-    { no: 4, materi: 'Tugas 4 — Responsive Design', nilai: 95 },
+    { no: 1, materi: 'Proyek Akhir Semester Ganjil', nilai: 92 },
+    { no: 2, materi: 'Tugas 2 — Bootstrap', nilai: 90 },
+    { no: 3, materi: 'Tugas 3 — Bootstrap Cards', nilai: 95 },
+    { no: 4, materi: 'Tugas 4 — JavaScript', nilai: 88 },
     { no: 5, materi: 'Mini Project Website', nilai: 97 },
   ];
   (function renderGrades() {
@@ -701,13 +628,3 @@ const html = `<!DOCTYPE html>
 </script>
 </body>
 </html>`;
-
-export default function Home() {
-  return (
-    <iframe
-      srcDoc={html}
-      style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }}
-      title="Website Report Siswa"
-    />
-  );
-}
