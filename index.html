@@ -417,7 +417,7 @@
   </div>
   <div class="detail-hero">
     <div>
-      <span class="num-badge">Project 1 dari 3</span>
+      <span class="num-badge">Project 1 dari 3</span>`;
       <h1>Proyek Akhir Semester Ganjil</h1>
     </div>
   </div>
@@ -507,7 +507,6 @@
 </div>
 
 <script>
-  // ── NAVIGATION ──
   function showPage(name) {
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('page-' + name).classList.add('active');
@@ -527,7 +526,6 @@
     m.classList.toggle('open');
   }
 
-  // ── GRADES ──
   var grades = [
     { no: 1, materi: 'Proyek Akhir Semester Ganjil', nilai: 92 },
     { no: 2, materi: 'Tugas 2 — Bootstrap', nilai: 90 },
@@ -552,79 +550,6 @@
     });
     console.log('Rata-rata nilai: ' + avg);
   })();
-
-  // ── CALCULATOR ──
-  var cDisplay = '0', cPrev = '', cOp = '';
-  function calcPress(v) {
-    cDisplay = (cDisplay === '0') ? v : cDisplay + v;
-    document.getElementById('calc-main').textContent = cDisplay;
-  }
-  function setOp(op) {
-    cPrev = cDisplay; cOp = op; cDisplay = '0';
-    document.getElementById('calc-sub').textContent = cPrev + ' ' + op;
-    document.getElementById('calc-main').textContent = cDisplay;
-  }
-  function calcEqual() {
-    var a = parseFloat(cPrev), b = parseFloat(cDisplay), res;
-    if (cOp === '+') res = a + b;
-    else if (cOp === '−') res = a - b;
-    else if (cOp === '×') res = a * b;
-    else if (cOp === '÷') res = b !== 0 ? a / b : 'Error';
-    cDisplay = String(parseFloat(res.toFixed(8)));
-    cPrev = ''; cOp = '';
-    document.getElementById('calc-sub').textContent = '';
-    document.getElementById('calc-main').textContent = cDisplay;
-  }
-  function calcClear() {
-    cDisplay = '0'; cPrev = ''; cOp = '';
-    document.getElementById('calc-sub').textContent = '';
-    document.getElementById('calc-main').textContent = '0';
-  }
-
-  // ── TO DO ──
-  var todos = [
-    { id: 1, text: 'Belajar HTML', done: true },
-    { id: 2, text: 'Belajar CSS', done: true },
-    { id: 3, text: 'Belajar JavaScript', done: false },
-  ];
-  function renderTodos() {
-    var list = document.getElementById('todo-list');
-    list.innerHTML = '';
-    if (!todos.length) {
-      list.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:24px;font-size:0.9rem;">Belum ada tugas.</p>';
-    } else {
-      todos.forEach(function(t) {
-        var d = document.createElement('div');
-        d.className = 'todo-item' + (t.done ? ' done' : '');
-        d.innerHTML = '<input type="checkbox"' + (t.done ? ' checked' : '') + ' onchange="toggleTodo(' + t.id + ')" />' +
-          '<span>' + t.text + '</span>' +
-          '<button class="del-btn" onclick="removeTodo(' + t.id + ')">✕</button>';
-        list.appendChild(d);
-      });
-    }
-    var done = todos.filter(function(t) { return t.done; }).length;
-    var pct = todos.length ? Math.round(done / todos.length * 100) : 0;
-    document.getElementById('todo-count').textContent = done + ' dari ' + todos.length + ' tugas selesai';
-    document.getElementById('todo-bar').style.width = pct + '%';
-  }
-  function addTodo() {
-    var input = document.getElementById('todo-input');
-    var text = input.value.trim();
-    if (!text) return;
-    todos.push({ id: Date.now(), text: text, done: false });
-    input.value = '';
-    renderTodos();
-  }
-  function toggleTodo(id) {
-    todos = todos.map(function(t) { return t.id === id ? { id: t.id, text: t.text, done: !t.done } : t; });
-    renderTodos();
-  }
-  function removeTodo(id) {
-    todos = todos.filter(function(t) { return t.id !== id; });
-    renderTodos();
-  }
-  renderTodos();
-  console.log('Website Report Siswa berhasil dimuat!');
 </script>
 </body>
-</html>`;
+</html>
